@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balikan Yuk</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    /* Linear gradient background */
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  }
+
+  h2 {
+    margin-bottom: 30px;
+    color: #333;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
+  }
+
+  button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  #yuk {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  #nggak {
+    background-color: #f44336;
+    color: white;
+    position: relative;
+  }
+
+  #feedback {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff6f61;
+    text-align: center;
+    max-width: 500px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+  }
+
+  #muah {
+    display: none;
+    margin-top: 20px;
+    width: 200px;
+  }
+</style>
+
+</head>
+<body>
+  <h2 id="judul">Balikan yuk?</h2>
+
+  <button id="yuk">Yuk</button>
+  <button id="nggak">Nggak</button>
+
+  <div id="feedback"></div>
+  <img id="muah" src="muah.gif" alt="Muah GIF">
+
+  <script>
+    const btnYuk = document.getElementById("yuk");
+    const btnNggak = document.getElementById("nggak");
+    const feedback = document.getElementById("feedback");
+    const judul = document.getElementById("judul");
+    const muah = document.getElementById("muah");
+
+    // Tombol "Nggak" lompat + teks berubah tiap 500ms
+    const interval = setInterval(() => {
+      if (btnNggak) {
+        const x = Math.floor(Math.random() * 200) - 100;
+        const y = Math.floor(Math.random() * 200) - 100;
+        btnNggak.style.transform = `translate(${x}px, ${y}px)`;
+
+        const texts = ["Nggak", "Yakin?", "Serius?", "Eits jangan"];
+        btnNggak.textContent =
+          texts[Math.floor(Math.random() * texts.length)];
+      }
+    }, 500);
+
+    // Klik tombol "Yuk"
+    btnYuk.addEventListener("click", () => {
+      judul.textContent = "Welcome back, ayang 🩵"; // ubah judul
+      feedback.textContent =
+        "Hehehe, welcome back ayang 🩵. " +
+        "Di chapter yang baru ini kita sama-sama bertumbuh ya, " +
+        "saling melengkapi dan komunikasi kita makin baik, " +
+        "frekuensi makin harmoni ✨";
+      muah.style.display = "block"; // tampilkan GIF
+
+      // hapus tombol-tombol
+      if (btnNggak) {
+        btnNggak.remove();
+        clearInterval(interval);
+      }
+      if (btnYuk) {
+        btnYuk.remove();
+      }
+    });
+
+    // Hardcore anti-screenshot / ganti tab
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        judul.textContent = "Ketauan mau SS ya? 🤭 Yuk aja pokoknya!";
+        feedback.textContent = "";
+
+        if (btnNggak) {
+          btnNggak.remove(); 
+          clearInterval(interval);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
